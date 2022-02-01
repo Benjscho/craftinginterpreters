@@ -33,6 +33,18 @@ class Parser {
         return expressionStatement(); 
     }
 
+    private Stmt printStatement() {
+        Expr value = expression();
+        consume(SEMICOLON, "Expect ';' after value.");
+        return new Stmt.Print(value);
+    }
+
+    private Stmt expressionStatement() {
+        Expr expr = expression(); 
+        consume(SEMICOLON, "Expect ';' after expression.");
+        return new Stmt.Expression(expr);
+    }
+
     private Expr comma() {
         Expr expr = equality(); 
         while (match(COMMA)) {
